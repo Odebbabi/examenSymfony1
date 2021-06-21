@@ -19,15 +19,6 @@ use Symfony\Component\Security\Core\Security;
 
 class QuizController extends AbstractController
 {
-    /**
-     * @var Security
-     */
-    private $security;
-
-    public function __construct(Security $security)
-    {
-        $this->security = $security;
-    }
 
     /**
      * @Route("dashboard/maitre/quiz", name="quiz_index")
@@ -38,7 +29,7 @@ class QuizController extends AbstractController
             throw new AccessDeniedException();
 
         $quizzes = $this->getDoctrine()->getManager()->getRepository(Quiz::class)->findAll();
-        $user = $this->security->getUser();
+        $user = $this->getUser();
 
 
         return $this->render('quiz/index.html.twig', [
@@ -73,7 +64,7 @@ class QuizController extends AbstractController
 
             return $this->redirectToRoute('quiz_index');
         }
-        $user = $this->security->getUser();
+        $user = $this->getUser();
 
         return $this->render('quiz/add.html.twig', [
             'quiz' => $quiz,
@@ -91,7 +82,7 @@ class QuizController extends AbstractController
     {
         if ($this->getUser()->getAccountType() === 'ELEVE')
             throw new AccessDeniedException();
-        $user = $this->security->getUser();
+        $user = $this->getUser();
 
         return $this->render('quiz/show.html.twig', [
             'quiz' => $quiz,
@@ -117,7 +108,7 @@ class QuizController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('quiz_index');
         }
-        $user = $this->security->getUser();
+        $user = $this->getUser();
 
         return $this->render('quiz/edit.html.twig', [
             'quiz' => $quiz,
@@ -170,7 +161,7 @@ class QuizController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         $comment = new Comment();
-        $user = $this->security->getUser();
+        $user = $this->getUser();
         $form = $this->createForm(CommentFormType::class, $comment);
         $form->handleRequest($request);
 

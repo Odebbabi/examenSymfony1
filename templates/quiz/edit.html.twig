@@ -2,6 +2,11 @@
 {% block title %}Quiz{% endblock %}
 
 {% block body %}
+    <style>
+        #quiz_form_question {
+            display: grid;
+        }
+    </style>
     <div class="main-container">
         <div class="pd-ltr-20 xs-pd-20-10">
             <div class="min-height-200px">
@@ -53,15 +58,15 @@
                     <div class="form-group row">
                         <label class="col-sm-12 col-md-2 col-form-label">Questions</label>
                         <div class="col-sm-12 col-md-10">
-                            {{ form_row(quizform.question, {'attr': {'class':'form-control'}, 'label':false}) }}
+                            {{ form_row(quizform.question, { 'label':false}) }}
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-10">
-                        {{ form_row(quizform.comments, {'attr': {'class':'form-control','style':'display:none'}, 'label':false}) }}
-                    </div>
-                    <div class="col-sm-12 col-md-10">
-                        {{ form_row(quizform.user, {'attr': {'class':'form-control','style':'display:none'}, 'label':false}) }}
-                    </div>
+{#                    <div class="col-sm-12 col-md-10">#}
+{#                        {{ form_row(quizform.comments, {'attr': {'class':'form-control','style':'display:none'}, 'label':false}) }}#}
+{#                    </div>#}
+{#                    <div class="col-sm-12 col-md-10">#}
+{#                        {{ form_row(quizform.user, {'attr': {'class':'form-control','style':'display:none'}, 'label':false}) }}#}
+{#                    </div>#}
 
 
 
