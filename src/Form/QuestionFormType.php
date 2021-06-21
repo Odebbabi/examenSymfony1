@@ -35,7 +35,7 @@ class QuestionFormType extends AbstractType
             ->add('nomQuestion', TextType::class, [
                 'constraints' => [
                     new Length([
-                        'min' => 1,
+                        'min' => 3,
                         'minMessage' => 'Your password should be at least {{ limit }} characters',
                         'max' => 300,
                     ]),
