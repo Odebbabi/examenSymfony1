@@ -1,0 +1,149 @@
+{% extends 'dashboard/dashboardMaitre.html.twig' %}
+
+{% block title %}Hello ExamenController!{% endblock %}
+
+{% block body %}
+    <div class="main-container">
+        <div class="pd-ltr-20 xs-pd-20-10">
+            <div class="min-height-200px">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <div class="title">
+                                <h4>Navigation</h4>
+                            </div>
+                            <nav aria-label="breadcrumb" role="navigation">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Gestions des Examens</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <!-- Simple Datatable start -->
+                <div class="card-box mb-30">
+                    <div class="pd-20">
+                        <h4 class="text-blue h4">Gestionnaire des Examens</h4>
+                        <p class="mb-0">you can find more options <a class="text-primary" href="https://datatables.net/"
+                                                                     target="_blank">Click Here</a></p>
+                    </div>
+                    <div style="text-align: right">
+                        {# <button type="submit" class="btn btn-outline-primary" value="Ajouter Niveau" /> #}
+                        <a class="btn btn-outline-primary"
+                           href="{{ path('exam_add') }}"
+                        >
+                            </i> Ajouter examen</a>
+                    </div>
+
+                    <div class="pb-20">
+                        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+
+                                    <table class="data-table table stripe hover nowrap dataTable no-footer dtr-inline"
+                                           id="DataTables_Table_0" role="grid"
+                                           aria-describedby="DataTables_Table_0_info">
+
+                                        <thead>
+
+                                        <tr role="row">
+                                            <th class="table-plus datatable-nosort sorting_asc" rowspan="1" colspan="1"
+                                                aria-label="Name">Type d'examen
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                                rowspan="1" colspan="1"
+                                                aria-label="Cour: activate to sort column ascending">Trimestre
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                                rowspan="1" colspan="1"
+                                                aria-label="Matière: activate to sort column ascending">Matière
+                                            </th>
+
+                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0"
+                                                rowspan="1" colspan="1"
+                                                aria-label="Niveau: activate to sort column ascending">Niveau
+                                            </th>
+                                            {# <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Num CIN: activate to sort column ascending">Num CIN</th> #}
+                                            <th class="datatable-nosort sorting_disabled" rowspan="1" colspan="1"
+                                                aria-label="Action">Action
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for exam in exams %}
+                                            {% if exam.user.Id == user.Id %}
+                                            <tr role="row" class="odd">
+                                                <td class="table-plus sorting_1" tabindex="0">
+                                                    {{ exam.typeExam }}
+                                                </td>
+                                                <td>
+                                                    {{ exam.semestre }}
+                                                </td>
+                                                <td>
+                                                    {{ exam.matiere.nomMatiere }}
+                                                </td>
+                                                <td>
+                                                    {{ exam.matiere.niveau.numNiveau }}
+                                                </td>
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle"
+                                                           href="#" role="button" data-toggle="dropdown"
+                                                           aria-expanded="false">
+                                                            <i class="dw dw-more"></i>
+                                                        </a>
+                                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list"
+                                                             style="">
+                                                            <a class="dropdown-item"
+                                                               href="{{ path('exam_show',{'id':exam.id}) }}"
+                                                            >
+                                                                <i
+                                                                        class="dw dw-eye"></i> Voir</a>
+                                                            <a class="dropdown-item"
+                                                               href="{{ path('exam_edit',{'id':exam.id}) }}"
+                                                            ><i
+                                                                        class="dw dw-edit2"></i> Editer</a>
+                                                            <a class="dropdown-item"
+                                                               href="{{ path('exam_delete',{'id':exam.id}) }}"
+                                                            ><i
+                                                                        class="dw dw-delete-3"></i> Supprimer</a>
+                                                            {# {% if user.isVerified == false %} #}
+                                                            {# <a class="dropdown-item" #}
+                                                            {# href="{{ path('user_eleve_verify',{'id':user.id}) }}" #}
+                                                            {# ><i #}
+                                                            {# class=" icon-copy fa fa-unlock"></i>Activer #}
+                                                            {# </a> #}
+                                                            {# {% elseif user.isVerified == true %} #}
+                                                            {# <a class="dropdown-item" #}
+                                                            {# href="{{ path('user_eleve_verify',{'id':user.id}) }}" #}
+                                                            {# ><i #}
+                                                            {# class="icon-copy fa fa-lock"></i>Désactiver #}
+                                                            {# </a> #}
+                                                            {# {% endif %} #}
+
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Simple Datatable End -->
+            </div>
+            <div class="footer-wrap pd-20 mb-20 card-box">
+                DeskApp - Bootstrap 4 Admin Template By <a href="https://github.com/dropways" target="_blank">Ankit
+                    Hingarajiya</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

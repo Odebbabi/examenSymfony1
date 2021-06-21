@@ -1,0 +1,98 @@
+{% extends 'dashboard/dashboardMaitre.html.twig' %}
+
+{% block title %}Exercices{% endblock %}
+
+{% block body %}
+    <div class="main-container">
+        <div class="pd-ltr-20 xs-pd-20-10">
+            <div class="min-height-200px">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <div class="title">
+                                <h4>Navigation</h4>
+                            </div>
+                            <nav aria-label="breadcrumb" role="navigation">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                    <li class="breadcrumb-item" aria-current="page" ><a href="{{ path ('exercice_index')}}">Gestion des Exercices</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Editer</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="pd-20 card-box mb-30">
+                    <div class="clearfix">
+                        {#                        <div class="pull-left">#}
+                        {#                            <h4 class="text-blue h4" style="margin-left: 83px"> Les informations de :</h4>#}
+                        {#                        </div>#}
+                    </div>
+                    {{ form_start(exerciceform) }}
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-md-2 col-form-label">Exercice</label>
+                        <div class="col-sm-12 col-md-10">
+                            {{ form_row(exerciceform.nomExercice, {'attr': {'class':'form-control'}, 'label':false}) }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-md-2 col-form-label">Type d'exercice</label>
+                        <div class="col-sm-12 col-md-10">
+                            {{ form_row(exerciceform.typeExercice, {'attr': {'class':'form-control'}, 'label':false}) }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-md-2 col-form-label">Cour</label>
+                        <div class="col-sm-12 col-md-10">
+                            {{ form_row(exerciceform.cour, {'attr': {'class':'form-control'}, 'label':false}) }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-md-2 col-form-label">Fichier PDF</label>
+                        <div class="col-sm-12 col-md-10">
+                            {{ form_row(exerciceform.filePDF, {'attr': {'class':'form-control'}, 'label':false}) }}
+                        </div>
+                        <span class="error">{{ form_errors(exerciceform.filePDF) }}</span>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-md-2 col-form-label">La correction</label>
+                        <div class="col-sm-12 col-md-10">
+                            {{ form_row(exerciceform.correctionPDF, {'attr': {'class':'form-control'}, 'label':false}) }}
+                        </div>
+                        <span class="error">{{ form_errors(exerciceform.correctionPDF) }}</span>
+                    </div>
+                    <div class="col-sm-12 col-md-10">
+                        {{ form_row(exerciceform.comments, {'attr': {'class':'form-control','style':'display:none'}, 'label':false}) }}
+                    </div>
+                    <div class="col-sm-12 col-md-10">
+                        {{ form_row(exerciceform.user, {'attr': {'class':'form-control','style':'display:none'}, 'label':false}) }}
+                    </div>
+
+
+                    <div style="text-align: right">
+                        <input type="submit" class="btn btn-outline-primary" value="Editer" />
+                    </div>
+                    {{ form_end(exerciceform) }}
+                </div>
+            </div>
+            <div class="footer-wrap pd-20 mb-20 card-box">
+                DeskApp - Bootstrap 4 Admin Template By <a href="https://github.com/dropways" target="_blank">Ankit
+                    Hingarajiya</a>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script>
+    /*$(document).ready(function(){
+        $("#registration_form_plainPassword").prop('required',false);
+        $("#registration_form_accountType").prop('required',false);
+        $("#registration_form_niveau").prop('required',false);
+        $("#registration_form_numCarteInscription").prop('required',false);
+    })*/
+</script>
+{% endblock %}

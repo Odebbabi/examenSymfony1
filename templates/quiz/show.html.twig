@@ -1,0 +1,89 @@
+{% extends 'dashboard/dashboardMaitre.html.twig' %}
+
+{% block title %}Quiz{% endblock %}
+
+{% block body %}
+    <div class="main-container">
+        <div class="pd-ltr-20 xs-pd-20-10">
+            <div class="min-height-200px">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <div class="title">
+                                <h4>Navigation</h4>
+                            </div>
+                            <nav aria-label="breadcrumb" role="navigation">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                    <li class="breadcrumb-item" aria-current="page"><a href="{{ path ('quiz_index')}}">Gestion des Quiz</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Voir</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="pd-20 card-box mb-30">
+                    <div class="clearfix">
+                        {#                        <div class="pull-left">#}
+                        {#                            <h4 class="text-blue h4" style= "margin-left: 83px">  Les informations de :</h4>#}
+                        {#                        </div>#}
+                    </div>
+                    <form>
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 col-form-label">Quiz</label>
+                            <div class="col-sm-12 col-md-10">
+                                <input class="form-control" type="text" value="{{ quiz.nomQuiz }}" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 col-form-label">Crée le </label>
+                            <div class="col-sm-12 col-md-10">
+                                <input class="form-control" value="{{ quiz.createdAt|date('d-m-Y') }}" type="text" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 col-form-label">Matière</label>
+                            <div class="col-sm-12 col-md-10">
+                                <input class="form-control" value="{{ quiz.matiere.nomMatiere }}" type="text" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 col-form-label">Niveau</label>
+                            <div class="col-sm-12 col-md-10">
+                                <input class="form-control" value="{{ quiz.matiere.niveau.numNiveau }}" type="text" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 col-form-label">Difficulté</label>
+                            <div class="col-sm-12 col-md-10">
+                                <input class="form-control" value="{{ quiz.difficulte }}" type="text" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 col-form-label">numéro des questions</label>
+                            <div class="col-sm-12 col-md-10">
+                                <input class="form-control" value="{{ quiz.getQuestion|length }}" type="number" readonly>
+                            </div>
+                        </div>
+                        <label class="col-sm-12 col-md-2 col-form-label">Les questions :</label>
+
+                        {% for question in quiz.getQuestion %}
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 col-form-label"></label>
+                            <div class="col-sm-12 col-md-10">
+                                <input class="form-control" value="{{ question.nomQuestion }}" type="text" readonly>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </form>
+                </div>
+            </div>
+            <div class="footer-wrap pd-20 mb-20 card-box">
+                DeskApp - Bootstrap 4 Admin Template By <a href="https://github.com/dropways" target="_blank">Ankit Hingarajiya</a>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

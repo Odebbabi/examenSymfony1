@@ -1,0 +1,49 @@
+{% extends 'dashboard/index.html.twig' %}
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+    <!-- banner part start-->
+    <section class="banner_part">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-xl-6">
+                    <div class="banner_text">
+                        <div class="banner_text_iner">
+                            <h3 class="mb-30">Connexion</h3>
+                            <div class="col-lg-8 col-md-8">
+                                {% for message in app.flashes('success') %}
+                                    <div>{{ message }}</div>
+                                {% endfor %}
+                                <form method="post" class="row">
+                                    {% if error %}
+                                        <div class="col s12 m6 l6 offset-m3 offset-l3">
+                                            <span class="error">{{ error.messageKey|trans(error.messageData, 'security') }}</span>
+                                        </div>
+                                    {% endif %}
+                                    {% if app.user %}
+                                        <div class="col s12 m6 l6 offset-m3 offset-l3">
+                                            Tu es actuellement connecté en tant que {{ app.user.fullName }}, <a href="{{ path('app_logout') }}">Déconnecte-toi</a>
+                                        </div>
+                                    {% endif %}
+                                <div class="mt-10">
+                                    <input type="email" name="email" placeholder="Votre Email" value="{{ last_username }}" required autofocus id="inputEmail" class="single-input">
+                                </div>
+                                    <div class="mt-10">
+                                    <input type="password" name="password" placeholder="Votre Mot de passe" required id="inputPassword" class="single-input">
+                                </div>
+                                <input type="hidden" name="_csrf_token"
+                                       value="{{ csrf_token('authenticate') }}">
+                                <div class="mt-5">
+                                    <input class="genric-btn primary circle" type="submit" value="Se connecter" style="margin-top: 20px; margin-left: 10px"/>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- banner part start-->
+
+{% endblock %}

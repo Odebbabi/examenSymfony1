@@ -1,0 +1,170 @@
+{% extends 'dashboard/index.html.twig' %}
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+    <!-- banner part start-->
+    <section class="banner_part">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-xl-6">
+                    <div class="banner_text">
+                        <div class="banner_text_iner">
+                            <h3 class="mb-30">Inscription</h3>
+                            <div class="col-lg-8 col-md-8">
+                                {% for flashError in app.flashes('verify_email_error') %}
+                                    <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+                                {% endfor %}
+                                {{ form_start(registrationForm,{'attr': {'class': 'row'}}) }}
+                                <div class="default-select" style="margin-bottom: 20px; width: 90px">
+                                    {{ form_widget(registrationForm.accountType) }}
+                                    <span class="error">{{ form_errors(registrationForm.accountType) }}</span>
+                                </div>
+                                <br>
+                                <div class="mt-10" style="margin-top: 52px; margin-left: -90px">
+                                    {{ form_widget(registrationForm.email, {'attr': {'placeholder': 'Adresse email', 'class':'single-input'}}) }}
+                                    <span class="error">{{ form_errors(registrationForm.email) }}</span>
+                                </div>
+                                <div class="mt-10">
+                                    {{ form_widget(registrationForm.plainPassword, {'attr': {'placeholder': 'Mot de passe', 'class':'single-input'}}) }}
+                                    <span class="error">{{ form_errors(registrationForm.plainPassword) }}</span>
+                                </div>
+                                <div class="mt-10">
+                                    {{ form_widget(registrationForm.fullName, {'attr': {'placeholder': 'Nom d\'utilisateur', 'class':'single-input'}}) }}
+                                    <span class="error">{{ form_errors(registrationForm.fullName) }}</span>
+                                </div>
+                                <div class="mt-10">
+                                    {{ form_widget(registrationForm.dateBirth, {'attr': {'placeholder': 'Date de naissance', 'class':'single-input'}}) }}
+                                    <span class="error">{{ form_errors(registrationForm.dateBirth) }}</span>
+                                </div>
+                                <div class="mt-10" style="margin-right:115px; width: 192px">
+                                    {{ form_widget(registrationForm.niveau, {'attr': {'placeholder': 'niveau eleve', 'class':'single-input'}}) }}
+                                    <span class="error">{{ form_errors(registrationForm.niveau) }}</span>
+                                </div>
+
+                                <div class="mt-10">
+                                    {{ form_widget(registrationForm.numCarteInscription, {'attr': {'placeholder': 'num carte inscription ', 'class':'single-input'}}) }}
+                                    <span class="error">{{ form_errors(registrationForm.numCarteInscription) }}</span>
+                                </div>
+
+                                <div class="mt-10">
+                                    {{ form_widget(registrationForm.specialty, {'attr': {'placeholder': 'spécialité ', 'class':'single-input'}}) }}
+                                    <span class="error">{{ form_errors(registrationForm.specialty) }}</span>
+                                </div>
+
+                                <div class="mt-10" style="margin-right: 42px; width: 200px">
+                                    {{ form_widget(registrationForm.numCin, {'attr': {'placeholder': 'num carte identité ', 'class':'single-input'}}) }}
+                                    <span class="error">{{ form_errors(registrationForm.numCin) }}</span>
+                                </div>
+                                <div class="mt-10" style="margin-right: 42px; width: max-content" id="imageCarteInscription">
+                                    <label>Image de la carte d'inscription :</label>
+                                    {{ form_widget(registrationForm.imageCarteInscription, {'attr':  {'class':'single-input'}}) }}
+                                    <span class="error">{{ form_errors(registrationForm.imageCarteInscription) }}</span>
+                                </div>
+                                <div class="mt-10" style="margin-right: 42px; width: max-content" id="imageCinAvant">
+                                    <label>Image avant de la CIN :</label>
+
+                                    {{ form_widget(registrationForm.imageCinAvant, {'attr': { 'class':'single-input'}}) }}
+                                    <span class="error">{{ form_errors(registrationForm.imageCinAvant) }}</span>
+                                </div>
+                                <div class="mt-10" style="margin-right: 42px; width: max-content" id="imageCinArriere">
+                                    <label>Image arrière de la CIN :</label>
+
+                                    {{ form_widget(registrationForm.imageCinArriere, {'attr': { 'class':'single-input'}}) }}
+                                    <span class="error">{{ form_errors(registrationForm.imageCinArriere) }}</span>
+                                </div>
+
+                                <div class="mt-5">
+                                    <input class="genric-btn primary circle" type="submit" value="S'inscrire"
+                                           style="margin-top: -10px; margin-left: 135px"/>
+                                </div>
+                                {{ form_end(registrationForm) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- banner part start-->
+
+{% endblock %}
+{% block javascript %}
+{{ parent()}}
+<script>
+    $(document).ready(function(){
+        $("#registration_form_niveau").hide();
+        $("#registration_form_niveau").prop('required',true);
+        $("#registration_form_numCarteInscription").hide();
+        $("#registration_form_numCarteInscription").prop('required',true);
+        $("#registration_form_specialty").hide();
+        $("#registration_form_specialty").prop('required',true);
+        $("#registration_form_numCin").hide();
+        $("#registration_form_numCin").prop('required',true);
+        $("#imageCarteInscription").hide();
+        $("#imageCarteInscription").prop('required',true);
+        $("#imageCinAvant").hide();
+        $("#imageCinAvant").prop('required',true);
+        $("#imageCinArriere").hide();
+        $("#imageCinArriere").prop('required',true);
+    });
+</script>
+<script>
+    $("#registration_form_accountType").on('change', function()
+        {
+             var accountType= $(this).val();
+             if(accountType === '0')
+                 {
+                   $("#registration_form_niveau").hide();
+                   $("#registration_form_numCarteInscription").hide();
+                   $("#registration_form_specialty").hide();
+                   $("#registration_form_numCin").hide();
+                   $("#registration_form_niveau").prop('required',true);
+                   $("#registration_form_numCarteInscription").prop('required',true);
+                   $("#registration_form_specialty").prop('required',true);
+                   $("#registration_form_numCin").prop('required',true);
+                   $("#imageCarteInscription").hide();
+                   $("#imageCarteInscription").prop('required',true);
+                   $("#imageCinAvant").hide();
+                   $("#imageCinAvant").prop('required',true);
+                   $("#imageCinArriere").hide();
+                   $("#imageCinArriere").prop('required',true);
+                 }
+             else if(accountType === 'ELEVE')
+                 {
+                   $("#registration_form_niveau").show();
+                   $("#registration_form_numCarteInscription").show();
+                   $("#registration_form_specialty").hide();
+                   $("#registration_form_numCin").hide();
+                   $("#registration_form_niveau").prop('required',true);
+                   $("#registration_form_numCarteInscription").prop('required',true);
+                   $("#registration_form_specialty").prop('required',false);
+                   $("#registration_form_numCin").prop('required',false);
+                   $("#imageCarteInscription").show();
+                   $("#imageCarteInscription").prop('required',true);
+                   $("#imageCinAvant").hide();
+                   $("#imageCinAvant").prop('required',false);
+                   $("#imageCinArriere").hide();
+                   $("#imageCinArriere").prop('required',false);
+
+                 }
+             else if(accountType === 'MAITRE')
+                 {
+                   $("#registration_form_niveau").hide();
+                   $("#registration_form_numCarteInscription").hide();
+                   $("#registration_form_specialty").show();
+                   $("#registration_form_numCin").show();
+                   $("#registration_form_niveau").prop('required',false);
+                   $("#registration_form_numCarteInscription").prop('required',false);
+                   $("#registration_form_specialty").prop('required',true);
+                   $("#registration_form_numCin").prop('required',true);
+                   $("#imageCinAvant").show();
+                   $("#imageCinAvant").prop('required',true);
+                   $("#imageCarteInscription").hide();
+                   $("#imageCarteInscription").prop('required',false);
+                   $("#imageCinArriere").show();
+                   $("#imageCinArriere").prop('required',true);
+
+                 }
+        });
+</script>
+{% endblock %}

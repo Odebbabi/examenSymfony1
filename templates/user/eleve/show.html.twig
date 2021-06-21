@@ -1,0 +1,80 @@
+{% extends 'dashboard/dashboardAdmin.html.twig' %}
+
+{% block title %}Maitres{% endblock %}
+
+{% block body %}
+    <div class="main-container">
+        <div class="pd-ltr-20 xs-pd-20-10">
+            <div class="min-height-200px">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <div class="title">
+                                <h4>Navigation</h4>
+                            </div>
+                            <nav aria-label="breadcrumb" role="navigation">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                    <li class="breadcrumb-item" aria-current="page"><a href="{{ path ('user_eleve_index')}}">Gestion des Elèves </a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Voir</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="pd-20 card-box mb-30">
+                    <div class="clearfix">
+                        <div class="pull-left">
+                            <h4 class="text-blue h4" style= "margin-left: 83px">  Les informations de :</h4>
+                        </div>
+                    </div>
+                    <form>
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 col-form-label">Nom Complet</label>
+                            <div class="col-sm-12 col-md-10">
+                                <input class="form-control" type="text" value="{{ user.fullName }}" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 col-form-label">Email</label>
+                            <div class="col-sm-12 col-md-10">
+                                <input class="form-control" value="{{ user.email }}" type="email" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-datetime-local-input" class="col-sm-12 col-md-2 col-form-label">Date de naissance</label>
+                            <div class="col-sm-12 col-md-10">
+                                <input class="form-control" type="text" value=" {{ user.dateBirth|date('d-m-Y')  }} " readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 col-form-label">Niveau</label>
+                            <div class="col-sm-12 col-md-10">
+                                <input class="form-control" value="{{ user.niveau }}" type="number" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 col-form-label">num Carte Inscription</label>
+                            <div class="col-sm-12 col-md-10">
+                                <input class="form-control" value="{{ user.numCarteInscription }}" type="text" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 col-form-label">Carte d'Inscription</label>
+                            <div class="col-sm-12 col-md-10">
+                                <img class="form-control"  src="{{ asset('user/images/' ~ user.carteInscription) }}" style= "width: 450px ;height:220px"
+                                     readonly>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-wrap pd-20 mb-20 card-box">
+                DeskApp - Bootstrap 4 Admin Template By <a href="https://github.com/dropways" target="_blank">Ankit Hingarajiya</a>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+

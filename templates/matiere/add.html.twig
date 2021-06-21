@@ -1,0 +1,77 @@
+{% extends 'dashboard/dashboardAdmin.html.twig' %}
+
+{% block title %}Matières{% endblock %}
+
+{% block body %}
+    <div class="main-container">
+        <div class="pd-ltr-20 xs-pd-20-10">
+            <div class="min-height-200px">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <div class="title">
+                                <h4>Navigation</h4>
+                            </div>
+                            <nav aria-label="breadcrumb" role="navigation">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                    <li class="breadcrumb-item" aria-current="page" ><a href="{{ path ('matiere_index')}}">Gestion des Matières</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Ajouter</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="pd-20 card-box mb-30">
+                    <div class="clearfix">
+                        {#                        <div class="pull-left">#}
+                        {#                            <h4 class="text-blue h4" style="margin-left: 83px"> Les informations de :</h4>#}
+                        {#                        </div>#}
+                    </div>
+                    {{ form_start(matiereform) }}
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-md-2 col-form-label">Matière</label>
+                        <div class="col-sm-12 col-md-10">
+                            {{ form_row(matiereform.nomMatiere, {'attr': {'class':'form-control'}, 'label':false}) }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-md-2 col-form-label">Domaine</label>
+                        <div class="col-sm-12 col-md-10">
+                            {{ form_row(matiereform.domaineMatiere, {'attr': {'class':'form-control'}, 'label':false}) }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-md-2 col-form-label">Niveau</label>
+                        <div class="col-sm-12 col-md-10">
+                            {{ form_row(matiereform.niveau, {'attr': {'class':'form-control'}, 'label':false}) }}
+                        </div>
+                    </div>
+
+                    <div style="text-align: right">
+                        <input type="submit" class="btn btn-outline-primary" value="Ajouter" />
+                    </div>
+                    {{ form_end(matiereform) }}
+                </div>
+            </div>
+            <div class="footer-wrap pd-20 mb-20 card-box">
+                DeskApp - Bootstrap 4 Admin Template By <a href="https://github.com/dropways" target="_blank">Ankit
+                    Hingarajiya</a>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script>
+    /*$(document).ready(function(){
+        $("#registration_form_plainPassword").prop('required',false);
+        $("#registration_form_accountType").prop('required',false);
+        $("#registration_form_niveau").prop('required',false);
+        $("#registration_form_numCarteInscription").prop('required',false);
+    })*/
+</script>
+{% endblock %}

@@ -1,0 +1,127 @@
+{% extends 'dashboard/dashboardEleve.html.twig' %}
+
+{% block title %}Hello CourController!{% endblock %}
+
+{% block header %}
+    <header class="main_menu single_page_menu">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        <a class="navbar-brand logo_1" href="{{ path('dashboard_user_eleve') }}"> <img
+                                    src="{{ asset('home/img/Web-School logo white.png') }}" alt="logo" style="width: 250px"> </a>
+                        <a class="navbar-brand logo_2" href="{{ path('dashboard_user_eleve') }}"> <img
+                                    src="{{ asset('home/img/Web-School logo.png') }}" alt="logo" style="width: 250px"> </a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <div class="collapse navbar-collapse main-menu-item justify-content-end"
+                             id="navbarSupportedContent">
+                            <ul class="navbar-nav align-items-center">
+                                <li class="nav-item ">
+                                    <a class="nav-link " href="{{ path('dashboard_user_eleve') }}">Acceuil</a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link" href="{{ path('cour_eleve_index') }}">Cours</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link"
+                                       href="{{ path('exercice_eleve_index') }}"
+                                    >Exercices</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link"
+                                       href="{{ path('exam_eleve_index') }}"
+                                    >Examens</a>
+                                </li>
+                                <li class="nav-item" active>
+                                    <a class="nav-link"
+                                       href="{{ path('quiz_eleve_index') }}" style="color:#FF8C00"
+                                    >Quiz</a>
+                                </li>
+                                <li class="d-none d-lg-block">
+                                    <a class="btn_1"
+                                       href="{{ path('app_logout') }}"
+                                    >Déconnecter</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+{% block body %}
+    <section class="breadcrumb breadcrumb_bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb_iner text-center">
+                        <div class="breadcrumb_iner_item">
+                            <h2>Mes Quiz</h2>
+                            <p>Acceuil<span>/</span>Quiz</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- breadcrumb start-->
+    <!--::review_part start::-->
+    <section class="special_cource padding_top">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-5">
+                    <div class="section_tittle text-center">
+                        <p>quiz populaires</p>
+                        <h2>quiz spéciaux</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {% for quiz in quizzes %}
+
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="single_special_cource">
+                            <img src="{{ asset('home/img/special_cource_3.png') }}" class="special_img" alt="">
+                            <div class="special_cource_text">
+                                <h3 style=" text-align: center;margin-top:10px;font-size:25px">{{ quiz.matiere.nomMatiere }} </h3>
+                                <h4 style="float: none; text-align: center;margin-bottom: 20px">
+                                    {% if quiz.matiere.niveau.numNiveau == 1 %}
+                                        1ère année
+                                    {% else %}
+                                        {{ quiz.matiere.niveau.numNiveau }}ème année
+                                    {% endif %}
+                                </h4>
+                                <h3 style="margin-bottom: 20px; text-align: center;margin-top:10px;">{{ quiz.nomQuiz }} </h3>
+                                <a href="{{ path('quiz_eleve_pass',{'id':quiz.id}) }}" class="btn_4"
+                                   style="margin-left: 78px;margin-top: 10px;">Passer ce quiz</a>
+
+                                <div class="author_info">
+                                    <div class="author_img">
+                                        <img src="{{ asset('home/img/author/author_1.png') }}" alt="">
+                                        <div class="author_info_text">
+                                            <p>Préparé par:</p>
+                                            <h5>{{ quiz.user.fullName }}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!--::blog_part end::-->
+
+
+{% endblock %}
+

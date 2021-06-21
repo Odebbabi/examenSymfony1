@@ -1,0 +1,154 @@
+{% extends 'dashboard/dashboardMaitre.html.twig' %}
+
+{% block title %}Quiz{% endblock %}
+
+
+{% block body %}
+    <div class="main-container">
+
+        <div class="pd-ltr-20 xs-pd-20-10">
+            <div class="min-height-200px">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <div class="title">
+                                <h4>Navigation</h4>
+                            </div>
+
+                            <nav aria-label="breadcrumb" role="navigation">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                    <li class="breadcrumb-item" aria-current="page"><a href="{{ path ('question_index')}}">Gestion des Questions</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Ajouter</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="pd-20 card-box mb-30">
+                    <div class="clearfix">
+                    </div>
+                    {{ form_start(questionform) }}
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-md-2 col-form-label">La question : </label>
+                        <div class="col-sm-12 col-md-10">
+                            {{ form_row(questionform.nomQuestion, {'attr': {'class':'form-control'}, 'label':false}) }}
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-10">
+                        {{ form_row(questionform.createdAt, {'attr': {'class':'form-control','style':'display:none'}, 'label':false}) }}
+                    </div>
+
+
+                    <div class="form-group row">
+
+                        <label class="col-sm-12 col-md-2 col-form-label">Les proposition : </label>
+                        <div class="col-sm-12 col-md-10">
+                            <ul class="proposition"
+                                data-prototype="{{ form_row(questionform.proposition.vars.prototype)|e('html_attr') }}">
+                                {% for proposition in questionform.proposition %}
+                                    <li style="margin-top: 20px"> {{ form_row(proposition.nomProposition, {'attr': {'class':'form-control'}, 'label':false}) }}
+                                    </li>
+                                    <li>{{ form_row(proposition.correcte, {'attr': {'class':'form-control'}, 'label':false}) }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <button type="button" class="btn btn-info add_item_link" data-collection-holder-class="proposition">
+                                Ajouter une proposition
+                            </button>
+
+                        </div>
+
+
+                    </div>
+
+                    <div style="text-align: right">
+                        <input type="submit" class="btn btn-outline-primary" value="Ajouter"/>
+                    </div>
+                    {{ form_end(questionform) }}
+                </div>
+            </div>
+            <div class="footer-wrap pd-20 mb-20 card-box">
+                DeskApp - Bootstrap 4 Admin Template By <a href="https://github.com/dropways" target="_blank">Ankit
+                    Hingarajiya</a>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script>
+    $(document).ready(function(){
+        var $propositionCollectionHolder = $('ul.proposition');
+        $propositionCollectionHolder.data('index', $propositionCollectionHolder.find('input').length)
+        $('body').on('click', '.add_item_link', function(e) {
+            var $collectionHolderClass = $(e.currentTarget).data('collectionHolderClass');
+            addFormToCollection($collectionHolderClass);
+      })
+
+    });
+    $(document).ready(function(){
+        $collectionHolder = $('ul.proposition');
+        $collectionHolder.find('ul').each(function() {
+        addPropositionFormDeleteLink($(this));
+        })
+    });
+
+
+</script>
+<script>
+    function addFormToCollection($collectionHolderClass) {
+    // Get the ul that holds the collection of tags
+    var $collectionHolder = $('.' + $collectionHolderClass);
+
+    // Get the data-prototype explained earlier
+    var prototype = $collectionHolder.data('prototype');
+
+    // get the new index
+    var index = $collectionHolder.data('index');
+
+    var newForm = prototype;
+    // You need this only if you didn't set 'label' => false in your tags field in TaskType
+    // Replace '__name__label__' in the prototype's HTML to
+    // instead be a number based on how many items we have
+    // newForm = newForm.replace(/__name__label__/g, index);
+    // Replace '__name__' in the prototype's HTML to
+    // instead be a number based on how many items we have
+    newForm = newForm.replace(/__name__/g, index);
+    newForm = newForm.replace("<input ", "<input class='form-control' ");
+    newForm = newForm.replace("<select ", "<select class='form-control' ");
+    newForm = newForm.replace("<label for=\"question_form_proposition_"+index+"_nomProposition\">Nom proposition</label>", " ");
+    newForm = newForm.replace("<label for=\"question_form_proposition_"+index+"_correcte\" class=\"required\">Correcte</label>", " ");
+    newForm = newForm.replace("<div id=\"question_form_proposition_"+index+"\"><div>", "<div id=\"question_form_proposition_"+index+"\" style='margin-bottom: 20px'><div>");
+    console.log(newForm)
+
+    // increase the index with one for the next item
+    $collectionHolder.data('index', index + 1);
+
+    // Display the form in the page in an li, before the "Add a tag" link li
+    var $newFormLi = $('<li style="margin-top: 20px; margin-bottom: 20px"></li>').append(newForm);
+    // Add the new form at the end of the list
+    $collectionHolder.append($newFormLi)
+
+    addPropositionFormDeleteLink($newFormLi);
+
+}
+
+</script>
+<script>
+function addPropositionFormDeleteLink($propositionFormLi) {
+    var $removeFormButton = $('<button type="button" class="btn btn-info">Supprimer cette proposition</button>');
+    $propositionFormLi.append($removeFormButton);
+
+    $removeFormButton.on('click', function(e) {
+        // remove the li for the tag form
+        $propositionFormLi.remove();
+    });
+}
+</script>
+
+{% endblock %}

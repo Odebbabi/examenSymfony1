@@ -1,0 +1,279 @@
+{% extends 'dashboard/dashboardEleve.html.twig' %}
+
+
+{% block title %}Passer quiz {% endblock %}
+
+{% block header %}
+
+    <header class="main_menu single_page_menu">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        <a class="navbar-brand logo_1" href="{{ path('dashboard_user_eleve') }}"> <img
+                                    src="{{ asset('home/img/Web-School logo white.png') }}" alt="logo" style="width: 250px"> </a>
+                        <a class="navbar-brand logo_2" href="{{ path('dashboard_user_eleve') }}"> <img
+                                    src="{{ asset('home/img/Web-School logo.png') }}" alt="logo" style="width: 250px"> </a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <div class="collapse navbar-collapse main-menu-item justify-content-end"
+                             id="navbarSupportedContent">
+                            <ul class="navbar-nav align-items-center">
+                                <li class="nav-item ">
+                                    <a class="nav-link " href="{{ path('dashboard_user_eleve') }}">Acceuil</a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link" href="{{ path('cour_eleve_index') }}">Cours</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link"
+                                       href="{{ path('exercice_eleve_index') }}"
+                                    >Exercices</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link"
+                                       href="{{ path('exam_eleve_index') }}"
+                                    >Examens</a>
+                                </li>
+                                <li class="nav-item" active>
+                                    <a class="nav-link"
+                                       href="{{ path('quiz_eleve_index') }}" style="color:#FF8C00"
+                                    >Quiz</a>
+                                </li>
+                                <li class="d-none d-lg-block">
+                                    <a class="btn_1"
+                                       href="{{ path('app_logout') }}"
+                                    >Déconnecter</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+{% block body %}
+    <section class="breadcrumb breadcrumb_bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb_iner text-center">
+                        <div class="breadcrumb_iner_item">
+                            <h2>Passer le quiz </h2>
+                            <p>Acceuil<span>/</span>quiz</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="course_details_area section_padding">
+        <h2 class="title_top"
+            style="text-align: center;margin-top: -89px; font-size:27px;margin-bottom: 50px">{{ quiz.nomQuiz }} </h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 course_details_left">
+                    <div class="main_image">
+                        <img class="img-fluid" src="{{ asset('home/img/quiz.png') }}" alt="">
+                    </div>
+                    <div class="section-top-border" style="margin: auto; width: 85%; padding: 10px;">
+                        <div class="row" style="margin-left: auto;width: max-content">
+                            <form id="quiz-form" method="post" style="width: 1000px">
+                                <div class="col-lg-8 col-md-8">
+{#                                    <h3 class="mb-30">{{ quiz.nomQuiz }}</h3>#}
+                                    <h2 class="mb-30" id="moyResult" style="margin-top: revert;border: inset;text-align: center;color: darkcyan"></h2>
+
+                                    {% for question in quiz.getQuestion %}
+                                        <div class="single-element-widget mt-30">
+                                            <h4 class="mb-30">{{ question.nomQuestion }}</h4>
+                                            {% for items,proposition in question.getProposition %}
+                                                <div class="switch-wrap d-flex justify-content-between">
+                                                    <p>{{ items+1 }} . {{ proposition.nomProposition }}</p>
+                                                    <div class="primary-checkbox" style="margin-left: auto; margin-right: 25px; color: #1c7430">
+                                                        <input type="checkbox" id="{{ question.id }}-{{ proposition.id }}"
+                                                               name="{{ question.id }}-{{ proposition.id }}-response">
+                                                        <label for="{{ question.id }}-{{ proposition.id }}"></label>
+                                                    </div>
+
+                                                    {% if proposition.correcte == true %}
+                                                        <span id="succés" class="single_feature_icon"
+                                                              style="color: #1c7430"><i class="ti-check"></i></span>
+                                                    {% endif %}
+
+                                                    {% if proposition.correcte == false %}
+                                                        <span id="Noén" class="single_feature_icon"
+                                                              style="color: darkred"><i class="ti-close"></i></span>
+                                                    {% endif %}
+
+                                                    {# {% if proposition.correcte == true %}
+                                                    <i id="succés" class="bi bi-display"></i>
+                                                {% endif %}
+                                                {% if proposition.correcte == false %}
+
+                                                    <i id="Non" class="bi bi-display"></i>
+                                                {% endif %} #}
+
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+
+                                    {% endfor %}
+                                    <input type="submit" class="btn_4"
+                                           style="margin-left: 511px;margin-top: 20px;text-align: center;" value="Valider"/>
+
+                                    <a href="{{ path('quiz_eleve_pass',{'id':quiz.id}) }}"
+                                       class="genric-btn info circle arrow" id="repeat"
+                                       style="margin-left: 488px;margin-top: 20px;">Repasser le quiz</a>
+                                    {# <a href="#" class="genric-btn success circle arrow">Success<span class="lnr lnr-arrow-right"></span></a> #}
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-lg-4 right-contents">
+                    <div class="sidebar_top">
+                        <ul>
+                            <li>
+                                <a class="justify-content-between d-flex">
+                                    <p>Nom du formateur</p>
+                                    <span class="color">{{ quiz.user.fullName }}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="justify-content-between d-flex">
+                                    <p>Matière </p>
+                                    <span class="color">{{ quiz.matiere.nomMatiere }}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="justify-content-between d-flex">
+                                    <p>Niveau </p>
+                                    <span class="color">{{ quiz.matiere.niveau.numNiveau }}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="justify-content-between d-flex">
+                                    <p>Difficulté </p>
+                                    <span class="color">{{ quiz.difficulte }}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="justify-content-between d-flex">
+                                    <p>NUM questions </p>
+                                    <span class="color">
+                                        {{ quiz.getQuestion|length }}
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                    <div class="feedeback">
+                        <h6>Vos réactions</h6>
+                        {{ form_start(commentform) }}
+
+                        {{ form_row(commentform.text , {'attr': {'class':'form-control'}, 'label':false}) }}
+
+                        <input type="submit" class="btn_4" value="Envoyer" style="margin-top: 20px;margin-left: 266px"/>
+                        {{ form_end(commentform) }}
+
+                    </div>
+                    <h4 class="title">Commentaires</h4>
+                    <div class="comments-area mb-30">
+                        {% for comment in comments %}
+
+                            <div class="comment-list">
+                                <div class="single-comment single-reviews justify-content-between d-flex">
+                                    <div class="user justify-content-between d-flex">
+                                        <div class="thumb">
+                                            <img src="{{ asset('home/img/cource/cource_1.png') }}" alt="">
+                                        </div>
+                                        <div class="desc">
+                                            <h5><a href="#">{{ comment.user.fullName }}</a>
+                                            </h5>
+                                            <p class="comment">
+                                                {{ comment.text }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+
+
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script>
+    $(document).ready(function(){
+        $("#succés").hide();
+        $("#Noén").hide();
+        $("#repeat").hide();
+
+    });
+</script>
+
+<script>
+// this is the id of the form
+$("#quiz-form").submit(function(e) {
+    e.preventDefault(); // avoid to execute the actual submit of the form.
+    var form = $(this);
+      $.ajax({
+           type: "POST",
+           url: '{{ path('quiz_eleve_validate',{'id': quiz.id}) }}',
+           data: {'data':form.serialize()}, // serializes the form's elements.
+           dataType: "json",
+           error: function (error) {
+
+            },
+           success: function(data)
+           {
+               if(data.moyenne != undefined){
+                   console.log(data.moyenne)
+                    $("#moyResult").text("Votre moyenne est ==>  " + data.moyenne + "%");
+                    $("#succés").show();
+                    $("#Noén").show();
+                    $("#repeat").show();
+$("input:checkbox").click(function() { return false; });
+                }
+               else alert("")
+                // $(".primary-radio input").prop('readonly', true);
+                // $(".primary-radio label").prop('readonly', true);
+
+
+
+
+
+
+
+           }
+     });
+});
+</script>
+
+
+{% endblock %}
