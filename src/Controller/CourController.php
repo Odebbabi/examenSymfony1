@@ -6,6 +6,7 @@ use App\Entity\Comment;
 use App\Entity\Cour;
 use App\Form\CommentFormType;
 use App\Form\CourFormType;
+use Doctrine\DBAL\DBALException;
 use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,7 +57,7 @@ class CourController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($cour);
             $em->flush();
-            $this->addFlash('success',' Bon travail! cours ajouté avec succès ');
+            $this->addFlash('success', ' Bon travail! cours ajouté avec succès ');
 
 
             return $this->redirectToRoute('cour_index');
@@ -104,7 +105,7 @@ class CourController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
-            $this->addFlash('success',' Bon travail! cours modifié avec succès ');
+            $this->addFlash('success', ' Bon travail! cours modifié avec succès ');
 
             return $this->redirectToRoute('cour_index');
         }
@@ -127,9 +128,14 @@ class CourController extends AbstractController
             throw new AccessDeniedException();
 
         $em = $this->getDoctrine()->getManager();
-        $em->remove($cour);
-        $em->flush();
-        $this->addFlash('success',' Bon travail! cours supprimé avec succès ');
+        try {
+            $em->remove($cour);
+            $em->flush();
+        } catch (DBALException $e) {
+            $this->addFlash('error', 'Vous ne pouvez pas executer cette action');
+            return $this->redirectToRoute('cour_index');
+        }
+        $this->addFlash('success', ' Bon travail! cours supprimé avec succès ');
 
         return $this->redirectToRoute('cour_index');
 

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Matiere;
 use App\Form\MatiereFormType;
+use Doctrine\DBAL\DBALException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -105,9 +106,13 @@ class MatiereController extends AbstractController
     public function maitreDelete(Matiere $matiere): Response
     {
         $em = $this->getDoctrine()->getManager();
+        try {
         $em->remove($matiere);
         $em->flush();
-
+        } catch (DBALException $e){
+            $this->addFlash('error','Vous ne pouvez pas executer cette action');
+            return $this->redirectToRoute('matiere_index');
+        }
         $this->addFlash('success',' Bon travail ! matière supprimé avec succès ');
 
         return $this->redirectToRoute('matiere_index');

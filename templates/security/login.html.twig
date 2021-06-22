@@ -10,14 +10,18 @@
                     <div class="banner_text">
                         <div class="banner_text_iner">
                             <h3 class="mb-30">Connexion</h3>
-                            <div class="col-lg-8 col-md-8">
+                            <div class="col-lg-8 col-md-12">
                                 {% for message in app.flashes('success') %}
-                                    <div class="alert alert-success col-md-6" role="alert">{{ message }}</div>
+                                    <div class="alert alert-success col-md-8" role="alert">{{ message }}</div>
                                 {% endfor %}
                                 <form method="post">
                                     {% if error %}
                                         <div class="alert alert-danger col-md-6" role="alert">
-                                            <span class="error">{{ error.messageKey|trans(error.messageData, 'security') }}</span>
+                                            {% if error.messageKey == 'Invalid CSRF token.' %}
+                                                <span class="error">Votre compte est désactiver</span>
+                                            {% else %}
+                                                <span class="error">{{ error.messageKey|trans(error.messageData, 'security') }}</span>
+                                            {% endif %}
                                         </div>
                                     {% endif %}
 

@@ -43,8 +43,8 @@ class PropositionFormType extends AbstractType
             ])
             ->add('correcte', ChoiceType::class,[
                 'choices' => [
-                    'true' => 1,
-                    'false' => 0
+                    'vrai' => 1,
+                    'faux' => 0
                 ]
                     ]);
 

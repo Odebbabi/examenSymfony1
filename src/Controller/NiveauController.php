@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Niveau;
 use App\Form\NiveauFormType;
+use Doctrine\DBAL\DBALException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -105,8 +106,13 @@ class NiveauController extends AbstractController
     public function maitreDelete(Niveau $niveau): Response
     {
         $em = $this->getDoctrine()->getManager();
-        $em->remove($niveau);
-        $em->flush();
+        try {
+            $em->remove($niveau);
+            $em->flush();
+        } catch (DBALException $e){
+            $this->addFlash('error','Vous ne pouvez pas executer cette action');
+            return $this->redirectToRoute('niveau_index');
+        }
         $this->addFlash('success',' Bon travail! niveau supprimé avec succès ');
 
         return $this->redirectToRoute('niveau_index');

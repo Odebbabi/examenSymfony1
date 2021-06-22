@@ -31,7 +31,6 @@ class ExamFormType extends AbstractType
             ->add('typeExam', ChoiceType::class, [
                 'choices' => [
                     '' => [
-                        '? ?' => '0',
                         'trimestre' => 'Trimestre',
                         'évaluation' => 'Evaluation',
                     ]
@@ -41,7 +40,6 @@ class ExamFormType extends AbstractType
             ->add('semestre', ChoiceType::class, [
                 'choices' => [
                     '' => [
-                        '? ?' => '0',
                         '1' => 'premiere',
                         '2' => 'deuxieme',
                         '3' => 'troisieme',

@@ -103,62 +103,6 @@
                 </a>
             </div>
         </div>
-        <div class="user-notification">
-            <div class="dropdown">
-                <a class="dropdown-toggle no-arrow" href="#" role="button" data-toggle="dropdown">
-                    <i class="icon-copy dw dw-notification"></i>
-                    <span class="badge notification-active"></span>
-                </a>
-{#                <div class="dropdown-menu dropdown-menu-right">#}
-{#                    <div class="notification-list mx-h-350 customscroll">#}
-{#                        <ul>#}
-{#                            <li>#}
-{#                                <a href="#">#}
-{#                                    <img src="{{ asset('dashboard/vendors/images/img.jpg') }}" alt="">#}
-{#                                    <h3>John Doe</h3>#}
-{#                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>#}
-{#                                </a>#}
-{#                            </li>#}
-{#                            <li>#}
-{#                                <a href="#">#}
-{#                                    <img src="{{ asset('dashboard/vendors/images/photo1.jpg') }}" alt="">#}
-{#                                    <h3>Lea R. Frith</h3>#}
-{#                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>#}
-{#                                </a>#}
-{#                            </li>#}
-{#                            <li>#}
-{#                                <a href="#">#}
-{#                                    <img src="{{ asset('dashboard/vendors/images/photo2.jpg') }}" alt="">#}
-{#                                    <h3>Erik L. Richards</h3>#}
-{#                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>#}
-{#                                </a>#}
-{#                            </li>#}
-{#                            <li>#}
-{#                                <a href="#">#}
-{#                                    <img src="{{ asset('dashboard/vendors/images/photo3.jpg') }}" alt="">#}
-{#                                    <h3>John Doe</h3>#}
-{#                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>#}
-{#                                </a>#}
-{#                            </li>#}
-{#                            <li>#}
-{#                                <a href="#">#}
-{#                                    <img src="{{ asset('dashboard/vendors/images/photo4.jpg') }}" alt="">#}
-{#                                    <h3>Renee I. Hansen</h3>#}
-{#                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>#}
-{#                                </a>#}
-{#                            </li>#}
-{#                            <li>#}
-{#                                <a href="#">#}
-{#                                    <img src="{{ asset('dashboard/vendors/images/img.jpg') }}" alt="">#}
-{#                                    <h3>Vicki M. Coleman</h3>#}
-{#                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>#}
-{#                                </a>#}
-{#                            </li>#}
-{#                        </ul>#}
-{#                    </div>#}
-{#                </div>#}
-            </div>
-        </div>
         <div class="user-info-dropdown">
             <div class="dropdown">
                 <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
@@ -176,7 +120,7 @@
             </div>
         </div>
         <div class="github-link">
-            <a href="https://github.com/dropways/deskapp" target="_blank"><img src="{{ asset('dashboard/vendors/images/github.svg') }}"
+            <a  target="_blank"><img src="{{ asset('dashboard/vendors/images/github.svg') }}"
                                                                                alt=""></a>
         </div>
     </div>
@@ -371,8 +315,8 @@
                                 <div id="chart"></div>
                             </div>
                             <div class="widget-data" style="text-align: center;margin-left: -55px;height: 46px">
-                                <div class="h4 mb-0">{{ user.cours|length }}</div>
-                                <div class="weight-600 font-14">Cours</div>
+                                <div class="h1 mb-0">{{ user.cours|length }}</div>
+                                <div class="weight-600 font-20">Cours</div>
                             </div>
                         </div>
                     </div>
@@ -384,8 +328,8 @@
                                 <div id="chart2"></div>
                             </div>
                             <div class="widget-data" style="text-align: center;margin-left: -55px;height: 46px">
-                                <div class="h4 mb-0">{{ user.exercices|length }}</div>
-                                <div class="weight-600 font-14">Exercices</div>
+                                <div class="h1 mb-0">{{ user.exercices|length }}</div>
+                                <div class="weight-600 font-20">Exercices</div>
                             </div>
                         </div>
                     </div>
@@ -397,8 +341,8 @@
                                 <div id="chart3"></div>
                             </div>
                             <div class="widget-data" style="text-align: center;margin-left: -55px;height: 46px">
-                                <div class="h4 mb-0">{{ user.examens|length }}</div>
-                                <div class="weight-600 font-14">Examens</div>
+                                <div class="h1 mb-0">{{ user.examens|length }}</div>
+                                <div class="weight-600 font-20">Examens</div>
                             </div>
                         </div>
                     </div>
@@ -410,8 +354,8 @@
                                 <div id="chart4"></div>
                             </div>
                             <div class="widget-data" style="text-align: center;margin-left: -55px;height: 46px">
-                                <div class="h4 mb-0">{{ user.quizzes|length }}</div>
-                                    <div class="weight-600 font-14">Quizs</div>
+                                <div class="h1 mb-0">{{ user.quizzes|length }}</div>
+                                    <div class="weight-600 font-20">Quizs</div>
                             </div>
                         </div>
                     </div>
@@ -444,6 +388,7 @@
 <script src="{{ asset('dashboard/src/plugins/datatables/js/vfs_fonts.js') }}"></script>
 <!-- Datatable Setting js -->
 <script src="{{ asset('dashboard/vendors/scripts/datatable-setting.js') }}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 {% endblock %}
 
 

@@ -51,7 +51,6 @@ class QuizFormType extends AbstractType
             ->add('difficulte', ChoiceType::class, [
                 'choices' => [
                     '' => [
-                        '? ?' => '--',
                         'facile' => 'FACILE',
                         'moyen' => 'MOYEN',
                         'difficile' => 'DIFFICILE',

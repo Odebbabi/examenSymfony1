@@ -30,6 +30,14 @@
                         </button>
                     </div>
                 {% endfor %}
+                {%for message in app.flashes('error') %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="border-width: thick;text-align: center;  -webkit-text-stroke-width: medium;   ">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                {% endfor %}
                 <div class="card-box mb-30">
                     <div class="pd-20">
                         <h4 class="text-blue h4">Gestionnaire des Niveaux</h4>
@@ -105,7 +113,7 @@
                                                             ><i
                                                                         class="dw dw-edit2"></i> Editer</a>
                                                             <a class="dropdown-item"
-                                                               href="{{ path('niveau_delete',{'id':niveau.id}) }}"
+                                                               href="{{ path('niveau_delete',{'id':niveau.id}) }}" onclick="deleteMaitre(this)"
                                                             ><i
                                                                         class="dw dw-delete-3"></i> Supprimer</a>
 {#                                                            {% if user.isVerified == false %}#}
@@ -140,4 +148,27 @@
 
         </div>
     </div>
+{% endblock %}
+{% block javascript %}
+{{ parent() }}
+<script>
+    function deleteMaitre(e){
+        // Don't follow the link
+    event.preventDefault();
+        swal({
+              title: "Êtes-vous sûr?",
+              text: "Une fois supprimé, vous ne pourrez plus récupérer ce niveau!",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            window.location= e.href;
+          } else {
+            return false;
+          }
+        });
+    }
+</script>
 {% endblock %}

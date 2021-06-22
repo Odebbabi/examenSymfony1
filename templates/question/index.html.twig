@@ -40,7 +40,7 @@
                         <a class="btn btn-outline-primary"
                                  href="{{ path('question_add') }}" style="margin-bottom: 24px; margin-right: 45px"
                         >
-                            </i> Ajouter questions</a>
+                            </i> Ajouter question</a>
                     </div>
 
                     <div class="pb-20">
@@ -97,7 +97,7 @@
                                                             ><i
                                                                         class="dw dw-edit2"></i> Editer</a>
                                                             <a class="dropdown-item"
-                                                                     href="{{ path('question_delete',{'id':question.id}) }}"
+                                                                     href="{{ path('question_delete',{'id':question.id}) }}" onclick="deleteMaitre(this)"
                                                             ><i
                                                                         class="dw dw-delete-3"></i> Supprimer</a>
                                                             {# {% if user.isVerified == false %} #}
@@ -133,4 +133,27 @@
         </div>
     </div>
 
+{% endblock %}
+{% block javascript %}
+{{ parent() }}
+<script>
+    function deleteMaitre(e){
+        // Don't follow the link
+    event.preventDefault();
+        swal({
+              title: "Êtes-vous sûr?",
+              text: "Une fois supprimé, vous ne pourrez plus récupérer ce question!",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            window.location= e.href;
+          } else {
+            return false;
+          }
+        });
+    }
+</script>
 {% endblock %}

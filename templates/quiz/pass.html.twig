@@ -146,7 +146,7 @@
                         <ul>
                             <li>
                                 <a class="justify-content-between d-flex">
-                                    <p>Nom du formateur</p>
+                                    <p>Préparé par:</p>
                                     <span class="color">{{ quiz.user.fullName }}</span>
                                 </a>
                             </li>
@@ -170,7 +170,7 @@
                             </li>
                             <li>
                                 <a class="justify-content-between d-flex">
-                                    <p>NUM questions </p>
+                                    <p>Numéros des questions </p>
                                     <span class="color">
                                         {{ quiz.getQuestion|length }}
                                     </span>
@@ -270,6 +270,7 @@ $("#quiz-form").submit(function(e) {
                    $("#moyResult").hide();
                    $("#noquiz").text(data.msg);
                }
+               $('html,body').scrollTop(400);
                 // $(".primary-radio input").prop('readonly', true);
                 // $(".primary-radio label").prop('readonly', true);
 

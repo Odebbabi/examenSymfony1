@@ -72,6 +72,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         if (!$user) {
             throw new UsernameNotFoundException('Email could not be found.');
         }
+        if (!$user->isVerified())
+            throw new InvalidCsrfTokenException();
 
         return $user;
     }

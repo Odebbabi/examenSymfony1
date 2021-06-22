@@ -112,7 +112,7 @@
                                                             ><i
                                                                         class="dw dw-edit2"></i> Editer</a>
                                                             <a class="dropdown-item"
-                                                               href="{{ path('exam_delete',{'id':exam.id}) }}"
+                                                               href="{{ path('exam_delete',{'id':exam.id}) }}" onclick="deleteMaitre(this)"
                                                             ><i
                                                                         class="dw dw-delete-3"></i> Supprimer</a>
                                                             {# {% if user.isVerified == false %} #}
@@ -149,5 +149,28 @@
         </div>
     </div>
 
+{% endblock %}
+{% block javascript %}
+{{ parent() }}
+<script>
+    function deleteMaitre(e){
+        // Don't follow the link
+    event.preventDefault();
+        swal({
+              title: "Êtes-vous sûr?",
+              text: "Une fois supprimé, vous ne pourrez plus récupérer cet examen!",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            window.location= e.href;
+          } else {
+            return false;
+          }
+        });
+    }
+</script>
 {% endblock %}
 
