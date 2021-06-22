@@ -89,6 +89,7 @@
                                 <div class="col-lg-8 col-md-8">
 {#                                    <h3 class="mb-30">{{ quiz.nomQuiz }}</h3>#}
                                     <h2 class="mb-30" id="moyResult" style="margin-top: revert;border: inset;text-align: center;color: darkcyan"></h2>
+                                    <h2 class="mb-30" id="noquiz" style="margin-top: revert;border: inset;text-align: center;color: red"></h2>
 
                                     {% for question in quiz.getQuestion %}
                                         <div class="single-element-widget mt-30">
@@ -233,6 +234,8 @@
         $("#succés").hide();
         $("#Noén").hide();
         $("#repeat").hide();
+        $("#noquiz").hide();
+
 
     });
 </script>
@@ -254,13 +257,19 @@ $("#quiz-form").submit(function(e) {
            {
                if(data.moyenne != undefined){
                    console.log(data.moyenne)
+                    $("#noquiz").hide();
+                   $("#moyResult").show();
                     $("#moyResult").text("Votre moyenne est ==>  " + data.moyenne + "%");
                     $("#succés").show();
                     $("#Noén").show();
                     $("#repeat").show();
-$("input:checkbox").click(function() { return false; });
+                    $("input:checkbox").click(function() { return false; });
                 }
-               else alert("")
+               else {
+                   $("#noquiz").show();
+                   $("#moyResult").hide();
+                   $("#noquiz").text(data.msg);
+               }
                 // $(".primary-radio input").prop('readonly', true);
                 // $(".primary-radio label").prop('readonly', true);
 

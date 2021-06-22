@@ -182,6 +182,8 @@ class CourController extends AbstractController
             'comment' => $comment,
             'commentform' => $form->createView(),
             'comments' => $comments,
+            'cours' => $cours,
+
         ]);
     }
 

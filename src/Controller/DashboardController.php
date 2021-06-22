@@ -26,8 +26,19 @@ class DashboardController extends AbstractController
      */
     public function dashboard(): Response
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $maitres = count($em->getRepository(User::class)->findBy(['accountType' => 'MAITRE'])) ;
+        $eleves = count($em->getRepository(User::class)->findBy(['accountType' => 'ELEVE'])) ;
+        $cours = count($em->getRepository(Cour::class)->findAll());
+        $quizs = count($em->getRepository(Quiz::class)->findAll());
+
         return $this->render('dashboard/index.html.twig', [
             'controller_name' => 'DashboardController',
+            'maitres' => $maitres,
+            'eleves' => $eleves,
+            'cours'=> $cours,
+            'quizs'=> $quizs,
         ]);
     }
 
@@ -68,9 +79,24 @@ class DashboardController extends AbstractController
 
         if ($this->getUser()->getAccountType() === 'MAITRE')
             throw new AccessDeniedException();
+        $user = $this->getUser();
+        $em = $this->getDoctrine()->getManager();
+
+        $maitres = count($em->getRepository(User::class)->findBy(['accountType' => 'MAITRE'])) ;
+        $eleves = count($em->getRepository(User::class)->findBy(['accountType' => 'ELEVE'])) ;
+        $cours = count($em->getRepository(Cour::class)->findAll());
+        $quizs = count($em->getRepository(Quiz::class)->findAll());
+
 
         return $this->render('dashboard/dashboardEleve.html.twig', [
             'controller_name' => 'DashboardController',
+            'user'=> $user,
+            'maitres' => $maitres,
+            'eleves' => $eleves,
+            'cours'=> $cours,
+            'quizs'=> $quizs,
+
+
         ]);
     }
 

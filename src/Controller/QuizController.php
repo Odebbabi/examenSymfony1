@@ -197,7 +197,7 @@ class QuizController extends AbstractController
         $data = $request->request->get('data');
 
         if (empty($data)) {
-            return new JsonResponse(['msg' =>'mejewebech'], 400);
+            return new JsonResponse(['msg' =>'Veillez répondre aux questions'], 200);
         } else {
             $data = explode('&', $data);
             $reponsesUser = [];
