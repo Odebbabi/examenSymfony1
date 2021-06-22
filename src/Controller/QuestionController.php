@@ -17,15 +17,7 @@ use Symfony\Component\Security\Core\Security;
 
 class QuestionController extends AbstractController
 {
-    /**
-     * @var Security
-     */
-    private $security;
 
-    public function __construct(Security $security)
-    {
-        $this->security = $security;
-    }
     /**
      * @Route("dashboard/maitre/question", name="question_index")
      */
@@ -35,7 +27,7 @@ class QuestionController extends AbstractController
             throw new AccessDeniedException();
 
         $questions = $this->getDoctrine()->getManager()->getRepository(Question::class)->findAll();
-        $user = $this->security->getUser();
+        $user = $this->getUser();
 
 
         return $this->render('question/index.html.twig', [
@@ -76,10 +68,12 @@ class QuestionController extends AbstractController
             $proposition1->setQuestion($question);
             $proposition2->setQuestion($question);
             $em->flush();
+            $this->addFlash('success',' Bon travail! question ajoutée avec succès ');
+
 
             return $this->redirectToRoute('question_index');
         }
-        $user = $this->security->getUser();
+        $user = $this->getUser();
 
         return $this->render('question/add.html.twig', [
             'question' => $question,
@@ -98,7 +92,7 @@ class QuestionController extends AbstractController
         if ($this->getUser()->getAccountType() === 'ELEVE')
             throw new AccessDeniedException();
 
-        $user = $this->security->getUser();
+        $user = $this->getUser();
 
         return $this->render('question/show.html.twig', [
             'question' => $question,
@@ -150,9 +144,11 @@ class QuestionController extends AbstractController
             $em->persist($question);
 
             $em->flush();
+            $this->addFlash('success',' Bon travail! question modifiée avec succès ');
+
             return $this->redirectToRoute('question_index');
         }
-        $user = $this->security->getUser();
+        $user = $this->getUser();
 
         return $this->render('question/edit.html.twig', [
             'question' => $question,
@@ -176,6 +172,8 @@ class QuestionController extends AbstractController
         }
         $em->remove($question);
         $em->flush();
+        $this->addFlash('success',' Bon travail! question supprimée avec succès ');
+
         return $this->redirectToRoute('question_index');
 
     }

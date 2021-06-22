@@ -4,7 +4,7 @@
     {% block style %}
         <!-- Basic Page Info -->
         <meta charset="utf-8">
-        <title>DeskApp - Bootstrap Admin Dashboard HTML Template</title>
+        <title>WEB-SCHOOL - Espace Administrateur</title>
 
         <!-- Site favicon -->
         <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('dashboard/vendors/images/apple-touch-icon.png') }}">
@@ -329,8 +329,8 @@
                 </div>
                 <div class="col-md-8">
                     <h4 class="font-20 weight-500 mb-10 text-capitalize">
-                        Welcome back
-                        <div class="weight-600 font-30 text-blue">Johnny Brown!</div>
+                        Bienvenue
+                        <div class="weight-600 font-30 text-blue">{{ user.fullName }}</div>
                     </h4>
                     <p class="font-18 max-width-600">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde hic
                         non repellendus debitis iure, doloremque assumenda. Autem modi, corrupti, nobis ea iure fugiat,
@@ -554,11 +554,11 @@
                 </tbody>
             </table>
         </div>
-        <div class="footer-wrap pd-20 mb-20 card-box">
+{#        <div class="footer-wrap pd-20 mb-20 card-box">#}
 {#            DeskApp - Bootstrap 4 Admin Template By <a href="https://github.com/dropways" target="_blank">Ankit#}
 {#                Hingarajiya</a>#}
-            WEB-SCHOOL - Plateforme Educative développé par Landari Yassine
-        </div>
+{#            WEB-SCHOOL - Plateforme Educative développé par Landari Yassine#}
+{#        </div>#}
     </div>
 </div>
 {% endblock %}

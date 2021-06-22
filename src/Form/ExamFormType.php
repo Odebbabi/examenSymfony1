@@ -66,29 +66,6 @@ class ExamFormType extends AbstractType
                 },
 //. '  - ' . $matiere->getMatiere()->getNiveau()->getNumNiveau()
 
-            ])
-            ->add('comments', EntityType::class, [
-                'class' => Comment::class,
-                'required' => false,
-                'label' => false,
-                'multiple' => true,
-                'expanded' => true,
-                'choice_label' => function (Comment $comment) {
-                    return $comment->getText();
-                },
-
-
-            ])
-            ->add('user', EntityType::class, [
-                'class' => User::class,
-                'required' => false,
-                'label' => false,
-                'expanded' => true,
-                'choice_label' => function (User $user) {
-                    return $user->getFullName();
-                },
-
-
             ]);
 
 

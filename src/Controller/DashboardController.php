@@ -2,6 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Cour;
+use App\Entity\Examen;
+use App\Entity\Exercice;
+use App\Entity\Quiz;
 use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,15 +16,7 @@ use Symfony\Component\Security\Core\Security;
 class DashboardController extends AbstractController
 {
 
-    /**
-     * @var Security
-     */
-    private $security;
 
-    public function __construct(Security $security)
-    {
-        $this->security = $security;
-    }
     /**
      * @Route("/", name="dashboard")
      */
@@ -36,7 +32,7 @@ class DashboardController extends AbstractController
      */
     public function dashboardAdmin(): Response
     {
-        $user = $this->security->getUser();
+        $user = $this->getUser();
 
         return $this->render('dashboard/dashboardAdmin.html.twig', [
             'controller_name' => 'DashboardController',
@@ -65,12 +61,13 @@ class DashboardController extends AbstractController
     {
         if ($this->getUser()->getAccountType() === 'ELEVE')
             throw new AccessDeniedException();
-        $user = $this->security->getUser();
+
+        $user = $this->getUser();
 
 
         return $this->render('dashboard/dashboardMaitre.html.twig', [
             'controller_name' => 'DashboardController',
-            'user'=> $user
+            'user'=> $user,
 
         ]);
     }

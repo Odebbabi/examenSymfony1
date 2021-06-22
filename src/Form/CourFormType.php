@@ -66,43 +66,8 @@ class CourFormType extends AbstractType
                 },
 
 
-            ])
-//            ->add('comments', TextareaType::class, [
-//                'required' => false,
-//                'label' => false,
-//                'constraints' => [
-//                    new Length([
-//                        'min' => 2,
-////                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-//                        // max length allowed by Symfony for security reasons
-//                        'max' => 500,
-//                    ]),
-//
-//                ],
-//            ]);
-            ->add('comments', EntityType::class, [
-                'class' => Comment::class,
-                'required' => false,
-                'label' => false,
-                'multiple' => true,
-                'expanded' => true,
-                'choice_label' => function (Comment $comment) {
-                    return $comment->getText();
-                },
-
-
-            ])
-            ->add('user', EntityType::class, [
-                'class' => User::class,
-                'required' => false,
-                'label' => false,
-                'expanded' => true,
-                'choice_label' => function (User $user) {
-                    return $user->getFullName();
-                },
-
-
             ]);
+
 
 
     }

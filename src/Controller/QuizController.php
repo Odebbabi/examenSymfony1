@@ -60,7 +60,7 @@ class QuizController extends AbstractController
             $em->persist($quiz);
             $em->flush();
 
-            $this->addFlash('success','quiz crée !');
+            $this->addFlash('success',' Bon travail! quiz ajouté avec succès ');
 
             return $this->redirectToRoute('quiz_index');
         }
@@ -106,6 +106,7 @@ class QuizController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
+            $this->addFlash('success',' Bon travail !! quiz modifié avec succès !');
             return $this->redirectToRoute('quiz_index');
         }
         $user = $this->getUser();
@@ -129,6 +130,8 @@ class QuizController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->remove($quiz);
         $em->flush();
+        $this->addFlash('success',' Bon travail !! quiz supprimé avec succès !');
+
         return $this->redirectToRoute('quiz_index');
 
     }

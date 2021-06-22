@@ -18,15 +18,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class CourController extends AbstractController
 {
-    /**
-     * @var Security
-     */
-    private $security;
-
-    public function __construct(Security $security)
-    {
-        $this->security = $security;
-    }
 
     /**
      * @Route("dashboard/maitre/cour", name="cour_index")
@@ -36,7 +27,7 @@ class CourController extends AbstractController
         if ($this->getUser()->getAccountType() === 'ELEVE')
             throw new AccessDeniedException();
         $cours = $this->getDoctrine()->getManager()->getRepository(Cour::class)->findAll();
-        $user = $this->security->getUser();
+        $user = $this->getUser();
 
         return $this->render('cour/index.html.twig', [
             'cours' => $cours,
@@ -55,19 +46,22 @@ class CourController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         $cour = new Cour();
-        $user = $this->security->getUser();
+        $user = $this->getUser();
+        $cour->setUser($user);
+
 
         $form = $this->createForm(CourFormType::class, $cour);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $cour->setUser($user);
             $em->persist($cour);
             $em->flush();
+            $this->addFlash('success',' Bon travail! cours ajouté avec succès ');
+
 
             return $this->redirectToRoute('cour_index');
         }
-        $user = $this->security->getUser();
+        $user = $this->getUser();
 
         return $this->render('cour/add.html.twig', [
             'cour' => $cour,
@@ -86,7 +80,7 @@ class CourController extends AbstractController
         if ($this->getUser()->getAccountType() === 'ELEVE')
             throw new AccessDeniedException();
 
-        $user = $this->security->getUser();
+        $user = $this->getUser();
 
         return $this->render('cour/show.html.twig', [
             'cour' => $cour,
@@ -110,9 +104,11 @@ class CourController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
+            $this->addFlash('success',' Bon travail! cours modifié avec succès ');
+
             return $this->redirectToRoute('cour_index');
         }
-        $user = $this->security->getUser();
+        $user = $this->getUser();
 
         return $this->render('cour/edit.html.twig', [
             'cour' => $cour,
@@ -133,6 +129,8 @@ class CourController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->remove($cour);
         $em->flush();
+        $this->addFlash('success',' Bon travail! cours supprimé avec succès ');
+
         return $this->redirectToRoute('cour_index');
 
     }
@@ -166,7 +164,7 @@ class CourController extends AbstractController
 
 
         $comment = new Comment();
-        $user = $this->security->getUser();
+        $user = $this->getUser();
         $form = $this->createForm(CommentFormType::class, $comment);
         $form->handleRequest($request);
 
@@ -183,7 +181,6 @@ class CourController extends AbstractController
             'cour' => $cour,
             'comment' => $comment,
             'commentform' => $form->createView(),
-            'cours' => $cours,
             'comments' => $comments,
         ]);
     }

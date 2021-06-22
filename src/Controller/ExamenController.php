@@ -16,15 +16,7 @@ use Symfony\Component\Security\Core\Security;
 
 class ExamenController extends AbstractController
 {
-    /**
-     * @var Security
-     */
-    private $security;
 
-    public function __construct(Security $security)
-    {
-        $this->security = $security;
-    }
 
     /**
      * @Route("dashboard/maitre/examen", name="exam_index")
@@ -35,7 +27,7 @@ class ExamenController extends AbstractController
             throw new AccessDeniedException();
 
         $exams = $this->getDoctrine()->getManager()->getRepository(Examen::class)->findAll();
-        $user = $this->security->getUser();
+        $user = $this->getUser();
 
         return $this->render('examen/index.html.twig', [
             'exams' => $exams,
@@ -55,22 +47,23 @@ class ExamenController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         $exam = new Examen();
-        $user = $this->security->getUser();
+        $user = $this->getUser();
+        $exam->setUser($user);
 
 
         $form = $this->createForm(ExamFormType::class,$exam);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
-            $exam->setUser($user);
 
 
             $em->persist($exam);
             $em->flush();
+            $this->addFlash('success',' Bon travail! examen ajouté avec succès ');
 
             return $this->redirectToRoute('exam_index');
         }
-        $user = $this->security->getUser();
+        $user = $this->getUser();
 
         return $this->render('examen/add.html.twig', [
             'exam' => $exam,
@@ -88,7 +81,7 @@ class ExamenController extends AbstractController
     {
         if ($this->getUser()->getAccountType() === 'ELEVE')
             throw new AccessDeniedException();
-        $user = $this->security->getUser();
+        $user = $this->getUser();
 
         return $this->render('examen/show.html.twig', [
             'exam' => $exam,
@@ -111,9 +104,11 @@ class ExamenController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
+            $this->addFlash('success',' Bon travail! examen modifié avec succès ');
+
             return $this->redirectToRoute( 'exam_index');
         }
-        $user = $this->security->getUser();
+        $user = $this->getUser();
 
         return $this->render('examen/edit.html.twig', [
             'exam' => $exam,
@@ -134,6 +129,8 @@ class ExamenController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->remove($exam);
         $em->flush();
+        $this->addFlash('success',' Bon travail! examen supprimé avec succès ');
+
         return $this->redirectToRoute('exam_index');
 
     }
@@ -168,7 +165,7 @@ class ExamenController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         $comment = new Comment();
-        $user = $this->security->getUser();
+        $user = $this->getUser();
         $form = $this->createForm(CommentFormType::class, $comment);
         $form->handleRequest($request);
 

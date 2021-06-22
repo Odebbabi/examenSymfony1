@@ -16,15 +16,7 @@ use Symfony\Component\Security\Core\Security;
 
 class ExerciceController extends AbstractController
 {
-    /**
-     * @var Security
-     */
-    private $security;
 
-    public function __construct(Security $security)
-    {
-        $this->security = $security;
-    }
     /**
      * @Route("dashboard/maitre/exercice", name="exercice_index")
      */
@@ -34,7 +26,7 @@ class ExerciceController extends AbstractController
             throw new AccessDeniedException();
 
         $exercices = $this->getDoctrine()->getManager()->getRepository(Exercice::class)->findAll();
-        $user = $this->security->getUser();
+        $user = $this->getUser();
 
 
         return $this->render('exercice/index.html.twig', [
@@ -54,20 +46,23 @@ class ExerciceController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         $exercice = new Exercice();
-        $user = $this->security->getUser();
+        $user = $this->getUser();
+        $exercice->setUser($user);
+
 
         $form = $this->createForm(ExerciceFormType::class,$exercice);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
-            $exercice->setUser($user);
 
             $em->persist($exercice);
             $em->flush();
+            $this->addFlash('success',' Bon travail! exercice ajouté avec succès ');
+
 
             return $this->redirectToRoute('exercice_index');
         }
-        $user = $this->security->getUser();
+        $user = $this->getUser();
 
         return $this->render('exercice/add.html.twig', [
             'exercice' => $exercice,
@@ -84,7 +79,7 @@ class ExerciceController extends AbstractController
     {
         if ($this->getUser()->getAccountType() === 'ELEVE')
             throw new AccessDeniedException();
-        $user = $this->security->getUser();
+        $user = $this->getUser();
 
         return $this->render('exercice/show.html.twig', [
             'exercice' => $exercice,
@@ -108,9 +103,11 @@ class ExerciceController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
+            $this->addFlash('success',' Bon travail! exercice modifié avec succès ');
+
             return $this->redirectToRoute( 'exercice_index');
         }
-        $user = $this->security->getUser();
+        $user = $this->getUser();
 
         return $this->render('exercice/edit.html.twig', [
             'exercice' => $exercice,
@@ -131,6 +128,8 @@ class ExerciceController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->remove($exercice);
         $em->flush();
+        $this->addFlash('success',' Bon travail! exercice supprimé avec succès ');
+
         return $this->redirectToRoute('exercice_index');
 
     }
@@ -165,7 +164,7 @@ class ExerciceController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         $comment = new Comment();
-        $user = $this->security->getUser();
+        $user = $this->getUser();
         $form = $this->createForm(CommentFormType::class, $comment);
         $form->handleRequest($request);
 
