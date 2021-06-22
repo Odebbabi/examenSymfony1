@@ -12,22 +12,14 @@ use Symfony\Component\Security\Core\Security;
 
 class NiveauController extends AbstractController
 {
-    /**
-     * @var Security
-     */
-    private $security;
 
-    public function __construct(Security $security)
-    {
-        $this->security = $security;
-    }
     /**
      * @Route("/admin/niveau", name="niveau_index")
      */
     public function niveauIndex(): Response
     { $niveaux = $this->getDoctrine()->getManager()->getRepository(Niveau::class)->findAll();
 
-        $us = $this->security->getUser();
+        $us = $this->getUser();
 
         return $this->render('niveau/index.html.twig', [
             'niveaux' => $niveaux,
@@ -50,10 +42,12 @@ class NiveauController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($niveau);
             $em->flush();
+            $this->addFlash('success',' Bon travail! niveau ajouté avec succès ');
+
 
             return $this->redirectToRoute('niveau_index');
         }
-        $us = $this->security->getUser();
+        $us = $this->getUser();
 
         return $this->render('niveau/Add.html.twig', [
             'niveau' => $niveau,
@@ -69,7 +63,7 @@ class NiveauController extends AbstractController
      */
     public function niveauShow(Niveau $niveau): Response
     {
-        $us = $this->security->getUser();
+        $us = $this->getUser();
 
         return $this->render('niveau/show.html.twig', [
             'niveau' => $niveau,
@@ -91,9 +85,11 @@ class NiveauController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
+            $this->addFlash('success',' Bon travail! niveau modifié avec succès ');
+
             return $this->redirectToRoute( 'niveau_index');
         }
-        $us = $this->security->getUser();
+        $us = $this->getUser();
 
         return $this->render('niveau/edit.html.twig', [
             'niveau' => $niveau,
@@ -111,6 +107,8 @@ class NiveauController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->remove($niveau);
         $em->flush();
+        $this->addFlash('success',' Bon travail! niveau supprimé avec succès ');
+
         return $this->redirectToRoute('niveau_index');
 
     }

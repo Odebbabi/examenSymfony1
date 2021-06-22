@@ -5,13 +5,17 @@ namespace App\Controller;
 use App\Entity\Cour;
 use App\Entity\Examen;
 use App\Entity\Exercice;
+use App\Entity\Matiere;
+use App\Entity\Niveau;
 use App\Entity\Quiz;
+use App\Entity\User;
 use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Security;
+
 
 class DashboardController extends AbstractController
 {
@@ -33,10 +37,26 @@ class DashboardController extends AbstractController
     public function dashboardAdmin(): Response
     {
         $user = $this->getUser();
+        $em = $this->getDoctrine()->getManager();
+
+        $maitres = count($em->getRepository(User::class)->findBy(['accountType' => 'MAITRE'])) ;
+        $eleves = count($em->getRepository(User::class)->findBy(['accountType' => 'ELEVE'])) ;
+        $niveaux = count($em->getRepository(Niveau::class)->findAll());
+        $matieres = count($em->getRepository(Matiere::class)->findAll());
+
 
         return $this->render('dashboard/dashboardAdmin.html.twig', [
             'controller_name' => 'DashboardController',
-            'utilisateur'=> $user
+            'utilisateur'=> $user,
+            'maitres' => $maitres,
+            'eleves' => $eleves,
+            'niveaux'=> $niveaux,
+            'matieres'=> $matieres,
+
+
+
+
+
         ]);
     }
 

@@ -31,7 +31,7 @@ class Matiere
 
     /**
      * @ORM\ManyToOne(targetEntity=Niveau::class, inversedBy="matieres")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $niveau;
 

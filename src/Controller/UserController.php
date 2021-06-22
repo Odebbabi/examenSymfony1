@@ -14,15 +14,7 @@ use Symfony\Component\Security\Core\Security;
 
 class UserController extends AbstractController
 {
-    /**
-     * @var Security
-     */
-    private $security;
 
-    public function __construct(Security $security)
-    {
-        $this->security = $security;
-    }
     /**
      * @Route("/admin/maitre", name="user_maitre_index")
      */
@@ -31,7 +23,7 @@ class UserController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $users = $em->getRepository(User::class)->findBy(['accountType' => 'MAITRE']);
 
-        $user = $this->security->getUser();
+        $user = $this->getUser();
 
         return $this->render('user/maitre/index.html.twig', [
             'users' => $users,
@@ -44,7 +36,7 @@ class UserController extends AbstractController
      */
     public function maitreShow(User $user): Response
     {
-        $us = $this->security->getUser();
+        $us = $this->getUser();
         return $this->render('user/maitre/show.html.twig', [
             'user' => $user,
             'utilisateur'=> $us,
@@ -63,9 +55,11 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
+            $this->addFlash('success',' Bon travail! maître modifié avec succès ');
+
             return $this->redirectToRoute( 'user_maitre_index');
         }
-        $us = $this->security->getUser();
+        $us = $this->getUser();
 
         return $this->render('user/maitre/edit.html.twig', [
             'user' => $user,
@@ -83,6 +77,8 @@ class UserController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->remove($user);
         $em->flush();
+        $this->addFlash('success',' Bon travail! maître supprimé avec succès ');
+
         return $this->redirectToRoute('user_maitre_index');
 
     }
@@ -106,7 +102,7 @@ class UserController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $users = $em->getRepository(User::class)->findBy(['accountType' => 'ELEVE']);
 
-        $us = $this->security->getUser();
+        $us = $this->getUser();
 
         return $this->render('user/eleve/index.html.twig', [
             'users' => $users,
@@ -120,7 +116,7 @@ class UserController extends AbstractController
      */
     public function eleveShow(User $user): Response
     {
-        $us = $this->security->getUser();
+        $us = $this->getUser();
 
         return $this->render('user/eleve/show.html.twig', [
             'user' => $user,
@@ -141,9 +137,11 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
+            $this->addFlash('success',' Bon travail! élève modifié avec succès ');
+
             return $this->redirectToRoute('user_eleve_index');
         }
-        $us = $this->security->getUser();
+        $us = $this->getUser();
 
         return $this->render('user/eleve/edit.html.twig', [
             'user' => $user,
@@ -161,6 +159,8 @@ class UserController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->remove($user);
         $em->flush();
+        $this->addFlash('success',' Bon travail! élève supprimé avec succès ');
+
         return $this->redirectToRoute('user_eleve_index');
     }
 

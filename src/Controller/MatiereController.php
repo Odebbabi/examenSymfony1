@@ -13,21 +13,13 @@ use Symfony\Component\Security\Core\Security;
 class MatiereController extends AbstractController
 {
 
-    /**
-     * @var Security
-     */
-    private $security;
 
-    public function __construct(Security $security)
-    {
-        $this->security = $security;
-    }
     /**
      * @Route("admin/matiere", name="matiere_index")
      */
     public function matiereindex(): Response
     {
-        $us = $this->security->getUser();
+        $us = $this->getUser();
 
         $matieres = $this->getDoctrine()->getManager()->getRepository(Matiere::class)->findAll();
         return $this->render('matiere/index.html.twig', [
@@ -51,10 +43,12 @@ class MatiereController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($matiere);
             $em->flush();
+            $this->addFlash('success',' Bon travail! matière ajouté avec succès ');
+
 
             return $this->redirectToRoute('matiere_index');
         }
-        $us = $this->security->getUser();
+        $us = $this->getUser();
 
         return $this->render('matiere/add.html.twig', [
             'matiere' => $matiere,
@@ -70,7 +64,7 @@ class MatiereController extends AbstractController
      */
     public function matiereShow(Matiere $matiere): Response
     {
-        $us = $this->security->getUser();
+        $us = $this->getUser();
 
         return $this->render('matiere/show.html.twig', [
             'matiere' => $matiere,
@@ -91,9 +85,11 @@ class MatiereController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
+            $this->addFlash('success',' Bon travail ! matière modifié avec succès ');
+
             return $this->redirectToRoute( 'matiere_index');
         }
-        $us = $this->security->getUser();
+        $us = $this->getUser();
 
         return $this->render('matiere/edit.html.twig', [
             'matiere' => $matiere,
@@ -111,6 +107,9 @@ class MatiereController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->remove($matiere);
         $em->flush();
+
+        $this->addFlash('success',' Bon travail ! matière supprimé avec succès ');
+
         return $this->redirectToRoute('matiere_index');
 
     }
